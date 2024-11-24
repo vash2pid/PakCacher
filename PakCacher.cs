@@ -88,9 +88,10 @@ namespace pakcacher
                                     zipFileInfo.filename = reader.ReadChars(zipFileInfo.filenamelen);
 
                                     // to data offset
-                                    zipFileInfo.offset += 30 + zipFileInfo.filenamelen;
+                                    zipFileInfo.offset += 30 + zipFileInfo.filenamelen + zipFileInfo.extrafieldlen;
 
-                                    //skip file data
+                                    // skip extra/file data
+                                    reader.ReadBytes(zipFileInfo.extrafieldlen);
                                     reader.ReadBytes(zipFileInfo.compressed);
 
                                     if (isPak) CreateCache(zipFileInfo, writestream);
